@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestão Escolar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="loginPage" class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>🎓 Sistema Escolar</h1>
+                <p>Faça login para continuar</p>
+            </div>
+            <div id="loginError" class="alert alert-error hidden"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">E-mail</label>
+                    <input type="email" id="loginEmail" required value="admin@escola.com">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Senha</label>
+                    <input type="password" id="loginPassword" required value="admin123">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">
+                    Entrar
+                </button>
+            </form>
+            <div style="margin-top: 20px; padding: 12px; background: var(--color-bg); border-radius: var(--radius); font-size: 13px;">
+                <strong>Credenciais de teste:</strong><br>
+                Admin: admin@escola.com / admin123<br>
+                Secretaria: secretaria@escola.com / sec123
+            </div>
+        </div>
+    </div>
+
+    <div id="mainApp" class="app-container hidden">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>🎓 Sistema Escolar</h1>
+                <div class="user-info">
+                    <div id="userName"></div>
+                    <span id="userRole" class="user-role"></span>
+                </div>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" data-page="dashboard">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                            </svg>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-page="alunos">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            </svg>
+                            Alunos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-page="turmas">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                            </svg>
+                            Turmas e Cursos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-page="matriculas">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            Matrículas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-page="historico">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+                            </svg>
+                            Histórico / Notas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-page="atendimentos">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+                            </svg>
+                            Atendimentos
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <button class="logout-btn" id="logoutBtn">Sair</button>
+        </aside>
+
+        <main class="main-content">
+            <div id="dashboardPage" class="page">
+                <div class="page-header">
+                    <h2>Dashboard</h2>
+                    <p>Visão geral do sistema</p>
+                </div>
+                <div class="dashboard-grid">
+                    <div class="stat-card success">
+                        <div class="stat-label">Alunos Ativos</div>
+                        <div class="stat-value" id="statAlunosAtivos">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Turmas Abertas</div>
+                        <div class="stat-value" id="statTurmasAbertas">0</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-label">Matrículas no Semestre</div>
+                        <div class="stat-value" id="statMatriculas">0</div>
+                    </div>
+                    <div class="stat-card danger">
+                        <div class="stat-label">Solicitações Abertas</div>
+                        <div class="stat-value" id="statSolicitacoes">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="alunosPage" class="page hidden">
+                <div class="page-header">
+                    <h2>Cadastro de Alunos</h2>
+                    <p>Gerencie os alunos da instituição</p>
+                </div>
+
+                <div class="form-container">
+                    <h3 style="margin-bottom: 20px;">
+                        <span id="alunoFormTitle">Novo Aluno</span>
+                    </h3>
+                    <form id="alunoForm">
+                        <input type="hidden" id="alunoId">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="alunoNome">Nome Completo *</label>
+                                <input type="text" id="alunoNome" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="alunoCPF">CPF *</label>
+                                <input type="text" id="alunoCPF" required maxlength="14" placeholder="000.000.000-00">
+                            </div>
+                            <div class="form-group">
+                                <label for="alunoDataNasc">Data de Nascimento *</label>
+                                <input type="date" id="alunoDataNasc" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="alunoTelefone">Telefone</label>
+                                <input type="tel" id="alunoTelefone" placeholder="(00) 00000-0000">
+                            </div>
+                            <div class="form-group">
+                                <label for="alunoEmail">E-mail</label>
+                                <input type="email" id="alunoEmail">
+                            </div>
+                            <div class="form-group">
+                                <label for="alunoSituacao">Situação *</label>
+                                <select id="alunoSituacao" required>
+                                    <option value="ATIVO">Ativo</option>
+                                    <option value="INATIVO">Inativo</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="alunoEndereco">Endereço</label>
+                            <textarea id="alunoEndereco"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" id="cancelarAlunoBtn">Cancelar</button>
+                            <button type="submit" class="btn btn-success">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>Lista de Alunos</h3>
+                        <input type="text" class="search-box" id="searchAlunos" placeholder="Buscar por nome ou CPF...">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>CPF</th>
+                                <th>Data Nasc.</th>
+                                <th>Telefone</th>
+                                <th>Situação</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="alunosTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="turmasPage" class="page hidden">
+                <div class="page-header">
+                    <h2>Turmas e Cursos</h2>
+                    <p>Gerencie turmas e cursos</p>
+                </div>
+
+                <div class="form-container">
+                    <h3 style="margin-bottom: 20px;">
+                        <span id="turmaFormTitle">Nova Turma</span>
+                    </h3>
+                    <form id="turmaForm">
+                        <input type="hidden" id="turmaId">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="turmaIdentificacao">Identificação *</label>
+                                <input type="text" id="turmaIdentificacao" required placeholder="Ex: DDS-7, INET-01">
+                            </div>
+                            <div class="form-group">
+                                <label for="turmaCurso">Curso *</label>
+                                <input type="text" id="turmaCurso" required placeholder="Ex: Desenvolvimento de Sistemas">
+                            </div>
+                            <div class="form-group">
+                                <label for="turmaTurno">Turno *</label>
+                                <select id="turmaTurno" required>
+                                    <option value="">Selecione...</option>
+                                    <option value="MATUTINO">Matutino</option>
+                                    <option value="VESPERTINO">Vespertino</option>
+                                    <option value="NOTURNO">Noturno</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="turmaAnoSemestre">Ano/Semestre *</label>
+                                <input type="text" id="turmaAnoSemestre" required placeholder="Ex: 2025/1">
+                            </div>
+                            <div class="form-group">
+                                <label for="turmaMaxVagas">Máximo de Vagas *</label>
+                                <input type="number" id="turmaMaxVagas" required min="1" value="30">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" id="cancelarTurmaBtn">Cancelar</button>
+                            <button type="submit" class="btn btn-success">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>Lista de Turmas</h3>
+                        <input type="text" class="search-box" id="searchTurmas" placeholder="Buscar turmas...">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Identificação</th>
+                                <th>Curso</th>
+                                <th>Turno</th>
+                                <th>Período</th>
+                                <th>Vagas</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="turmasTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="matriculasPage" class="page hidden">
+                <div class="page-header">
+                    <h2>Matrículas</h2>
+                    <p>Gerencie as matrículas dos alunos</p>
+                </div>
+
+                <div class="form-container">
+                    <h3 style="margin-bottom: 20px;">Nova Matrícula</h3>
+                    <form id="matriculaForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="matriculaAluno">Aluno *</label>
+                                <select id="matriculaAluno" required>
+                                    <option value="">Selecione um aluno...</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="matriculaTurma">Turma *</label>
+                                <select id="matriculaTurma" required>
+                                    <option value="">Selecione uma turma...</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="matriculaData">Data da Matrícula *</label>
+                                <input type="date" id="matriculaData" required>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success">Matricular</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>Lista de Matrículas</h3>
+                        <input type="text" class="search-box" id="searchMatriculas" placeholder="Buscar matrículas...">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Aluno</th>
+                                <th>Turma</th>
+                                <th>Curso</th>
+                                <th>Data Matrícula</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="matriculasTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="historicoPage" class="page hidden">
+                <div class="page-header">
+                    <h2>Histórico Escolar / Notas</h2>
+                    <p>Gerencie notas e frequência dos alunos</p>
+                </div>
+
+                <div class="form-container">
+                    <h3 style="margin-bottom: 20px;">Lançar Nota/Frequência</h3>
+                    <form id="notaForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="notaMatricula">Matrícula *</label>
+                                <select id="notaMatricula" required>
+                                    <option value="">Selecione uma matrícula...</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="notaNota">Nota (0-10) *</label>
+                                <input type="number" id="notaNota" required min="0" max="10" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="notaFrequencia">Frequência (%) *</label>
+                                <input type="number" id="notaFrequencia" required min="0" max="100">
+                            </div>
+                            <div class="form-group">
+                                <label for="notaSituacao">Situação *</label>
+                                <select id="notaSituacao" required>
+                                    <option value="CURSANDO">Cursando</option>
+                                    <option value="APROVADO">Aprovado</option>
+                                    <option value="REPROVADO">Reprovado</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>Histórico Escolar</h3>
+                        <input type="text" class="search-box" id="searchHistorico" placeholder="Buscar por aluno...">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Aluno</th>
+                                <th>Turma</th>
+                                <th>Curso</th>
+                                <th>Nota</th>
+                                <th>Frequência</th>
+                                <th>Situação</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historicoTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="atendimentosPage" class="page hidden">
+                <div class="page-header">
+                    <h2>Atendimento da Secretaria</h2>
+                    <p>Registre e gerencie solicitações</p>
+                </div>
+
+                <div class="form-container">
+                    <h3 style="margin-bottom: 20px;">
+                        <span id="atendimentoFormTitle">Nova Solicitação</span>
+                    </h3>
+                    <form id="atendimentoForm">
+                        <input type="hidden" id="atendimentoId">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="atendimentoAluno">Aluno *</label>
+                                <select id="atendimentoAluno" required>
+                                    <option value="">Selecione um aluno...</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="atendimentoTipo">Tipo de Solicitação *</label>
+                                <select id="atendimentoTipo" required>
+                                    <option value="">Selecione...</option>
+                                    <option value="DECLARACAO">Declaração Escolar</option>
+                                    <option value="HISTORICO">Histórico Escolar</option>
+                                    <option value="SEGUNDA_VIA">Segunda Via</option>
+                                    <option value="OUTROS">Outros</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="atendimentoData">Data *</label>
+                                <input type="date" id="atendimentoData" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="atendimentoStatus">Status *</label>
+                                <select id="atendimentoStatus" required>
+                                    <option value="ABERTO">Aberto</option>
+                                    <option value="EM_ANDAMENTO">Em Andamento</option>
+                                    <option value="CONCLUIDO">Concluído</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="atendimentoObs">Observações</label>
+                            <textarea id="atendimentoObs"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" id="cancelarAtendimentoBtn">Cancelar</button>
+                            <button type="submit" class="btn btn-success">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>Lista de Atendimentos</h3>
+                        <input type="text" class="search-box" id="searchAtendimentos" placeholder="Buscar atendimentos...">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Aluno</th>
+                                <th>Tipo</th>
+                                <th>Data</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="atendimentosTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
